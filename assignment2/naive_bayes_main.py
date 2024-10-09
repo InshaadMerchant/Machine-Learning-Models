@@ -15,7 +15,7 @@ dataset = "yeast"
 #training_file = dataset_directory + "/" + dataset + "_training.txt"
 #test_file = dataset_directory + "/" + dataset + "_test.txt"
 
-training_file = "yeast_training.txt"
-test_file = "yeast_test.txt"
+training_file = "satellite_training.txt"
+test_file = "satellite_test.txt"
 
 naive_bayes(training_file, test_file)
