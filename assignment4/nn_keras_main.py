@@ -8,14 +8,14 @@ from nn_keras import *
 # - which dataset to use for training and testing your model.
 
 directory = "./uci_data"
-dataset = "yeast_string"
+dataset = "pendigits_string"
 
 
 # When you test your code, you can select the hyperparameters you want to use 
 # by modifying the next lines
 layers = 4
-units_per_layer = 0
-epochs = 10
+units_per_layer = 40
+epochs = 20
 
 # Here we call your function.
 nn_keras(directory, dataset, layers, units_per_layer, epochs)

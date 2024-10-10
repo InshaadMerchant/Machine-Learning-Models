@@ -1,24 +1,23 @@
 import numpy as np
+import pandas as pd
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Input
-import pandas as pd
-import random 
 
 def nn_keras(directory, dataset, layers, units_per_layer, epochs):
     # Construct file paths
-    train_file = f"{directory}/{dataset}_training.txt"
+    training_file = f"{directory}/{dataset}_training.txt"
     test_file = f"{directory}/{dataset}_test.txt"
     
     # Load data
-    train_data = pd.read_csv(train_file, header=None, sep=r'\s+')
-    test_data = pd.read_csv(test_file, header=None, sep=r'\s+')
+    training_data = pd.read_csv(training_file, header=None, sep=r'\s+')
+    testing_data = pd.read_csv(test_file, header=None, sep=r'\s+')
 
     # Separate features and labels
-    X_train = train_data.iloc[:, :-1].values.astype(float)
-    y_train = train_data.iloc[:, -1].values
-    X_test = test_data.iloc[:, :-1].values.astype(float)
-    y_test = test_data.iloc[:, -1].values
+    X_train = training_data.iloc[:, :-1].values.astype(float)
+    y_train = training_data.iloc[:, -1].values
+    X_test = testing_data.iloc[:, :-1].values.astype(float)
+    y_test = testing_data.iloc[:, -1].values
     
     # Find the maximum absolute value for normalization
     max_abs_value = np.max(np.abs(X_train))
@@ -75,4 +74,3 @@ def nn_keras(directory, dataset, layers, units_per_layer, epochs):
     # Calculate and print overall classification accuracy
     classification_accuracy = np.mean(accuracies)
     print('classification accuracy=%6.4f%%\n' % (classification_accuracy*100))
-    
