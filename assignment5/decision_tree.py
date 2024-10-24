@@ -197,7 +197,7 @@ def decision_tree(training_file, test_file, option, pruning_thr):
             print_tree(tree)
     
     print("...................Model Training Complete......................")
-    
+    '''
     # Classification phase
     total_accuracy = 0
     n_test = len(testing_labels)
@@ -229,4 +229,4 @@ def decision_tree(training_file, test_file, option, pruning_thr):
     # Print overall classification accuracy
     classification_accuracy = total_accuracy / n_test
     print(f"classification accuracy={classification_accuracy:6.4f}")
-    
+    '''
