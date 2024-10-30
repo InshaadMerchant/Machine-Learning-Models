@@ -1,7 +1,8 @@
+#Inshaad Merchant ----- UTA ID: 1001861293 ----- Assignment 5
 import numpy as np
 import pandas as pd
 
-def calculate_entropy(labels):
+def entropy_calculation(labels):
     if len(labels) == 0:
         return 0
     unique_classes, counts = np.unique(labels, return_counts=True)
@@ -9,16 +10,16 @@ def calculate_entropy(labels):
     entropy = -np.sum(probabilities * np.log2(probabilities))
     return entropy
 
-def calculate_information_gain(data, labels, feature_idx, threshold):
-    parent_entropy = calculate_entropy(labels)
+def info_gain_calc(data, labels, feature_idx, threshold):
+    parent_entropy = entropy_calculation(labels)
     
     # Split the data
     left_mask = data[:, feature_idx] < threshold
     right_mask = ~left_mask
     
     # Calculate weighted entropy of children
-    left_entropy = calculate_entropy(labels[left_mask])
-    right_entropy = calculate_entropy(labels[right_mask])
+    left_entropy = entropy_calculation(labels[left_mask])
+    right_entropy = entropy_calculation(labels[right_mask])
     
     # Calculate weights
     total_samples = len(labels)
@@ -46,7 +47,7 @@ def find_best_split(data, labels, random_feature=None):
         # Try all possible thresholds
         for i in range(len(unique_values) - 1):
             threshold = (unique_values[i] + unique_values[i + 1]) / 2
-            gain = calculate_information_gain(data, labels, feature_idx, threshold)
+            gain = info_gain_calc(data, labels, feature_idx, threshold)
             
             if gain > best_gain:
                 best_gain = gain
@@ -168,9 +169,9 @@ def decision_tree(training_file, test_file, option, pruning_thr):
                                       categories=category_mappings[col]).codes
     
     # Convert to numpy arrays
-    training_features = training_data.iloc[:, :-1].values
+    training_attributes = training_data.iloc[:, :-1].values
     training_labels = training_data.iloc[:, -1].values
-    testing_features = testing_data.iloc[:, :-1].values
+    test_attributes = testing_data.iloc[:, :-1].values
     testing_labels = testing_data.iloc[:, -1].values
     
     # Get number of unique classes from training data
@@ -182,7 +183,7 @@ def decision_tree(training_file, test_file, option, pruning_thr):
     # Build tree(s) based on option
     if option == "optimized":
         # Build single optimized tree
-        tree = build_tree(1, training_features, training_labels, pruning_thr, n_classes)
+        tree = build_tree(1, training_attributes, training_labels, pruning_thr, n_classes)
         trees.append(tree)
         # Print the optimized tree
         print_tree(tree)
@@ -190,21 +191,21 @@ def decision_tree(training_file, test_file, option, pruning_thr):
         # Build random forest
         n_trees = int(option)
         for i in range(n_trees):
-            tree = build_tree(1, training_features, training_labels, pruning_thr, 
+            tree = build_tree(1, training_attributes, training_labels, pruning_thr, 
                             n_classes, is_random=True, tree_id=i+1)
             trees.append(tree)
             # Print all trees
             print_tree(tree)
     
     print("...................Model Training Complete......................")
-    '''
+    
     # Classification phase
     total_accuracy = 0
     n_test = len(testing_labels)
     
     # Classify each test instance
     for i in range(n_test):
-        instance = testing_features[i]
+        instance = test_attributes[i]
         combined_probability = np.zeros(n_classes)
         
         for tree in trees:
@@ -229,4 +230,3 @@ def decision_tree(training_file, test_file, option, pruning_thr):
     # Print overall classification accuracy
     classification_accuracy = total_accuracy / n_test
     print(f"classification accuracy={classification_accuracy:6.4f}")
-    '''
