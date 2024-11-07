@@ -17,6 +17,6 @@ test_file = dataset_directory + "/" + dataset + "_test.txt"
 
 # When you test your code, you can select the function arguments you want to use 
 # by modifying the next lines
-k = 3
+k = 5
 
 knn_classify(training_file, test_file, k)

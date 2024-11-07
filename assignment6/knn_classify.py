@@ -58,7 +58,10 @@ def knn_classify(training_file, testing_file, k):
         
         # Calculate accuracy for this sample
         if len(tied_classes) == 1:  # No ties
-            accuracy = 1.0 if predicted_class == true_class else 0.0
+            if predicted_class == true_class:
+                accuracy = 1.0
+            else:
+                accuracy = 0.0
         else:  # Ties
             if true_class in tied_classes:
                 accuracy = 1.0 / len(tied_classes)
@@ -73,5 +76,5 @@ def knn_classify(training_file, testing_file, k):
               (i + 1, str(predicted_class), str(true_class), accuracy))
     
     # Calculate and print overall classification accuracy
-    classification_accuracy = (total_accuracy / num_test_samples)
+    classification_accuracy = (total_accuracy / num_test_samples) * 100
     print('classification accuracy=%6.4f' % classification_accuracy)
