@@ -66,4 +66,3 @@ def AgentModel_Q_Learning_Passive(environment_file, policy_file, non_terminal_re
     for row in utilities:
         print("  " + "  ".join(f"{x:.3f}" for x in row))
     print()
-
