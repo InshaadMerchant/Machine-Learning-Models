@@ -7,7 +7,7 @@ dataset_directory = "./uci_data"
 
 # When you test your code, you can select the dataset you want to use 
 # by modifying the next lines
-dataset = "pendigits"
+dataset = "pendigits_string"
 #dataset = "satellite"
 #dataset = "yeast"
 
