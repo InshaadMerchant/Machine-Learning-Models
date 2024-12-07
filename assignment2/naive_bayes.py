@@ -23,12 +23,17 @@ def naive_bayes(training_file, test_file):
             'prior': len(class_data) / len(training_labels)
         }
 
+    # Print the training stage
+    for cls in classes:
+        for i, (mean, std) in enumerate(zip(parameters[cls]['mean'], parameters[cls]['std']), start=1):
+            print(f"Class {cls}, attribute {i}, mean = {mean:.2f}, std = {std:.2f}")
+
     predictions = classify(parameters, test_features, test_labels)
     # Output results to the screen
     for prediction in predictions:
         index, predicted, probability, true_label = prediction
         accuracy = 1.0 if predicted == true_label else 0.0
-        print(f"ID={index}, predicted={predicted}, probability = {probability:.4f}, true={true_label}, accuracy={accuracy:.2f}")
+        #print(f"ID={index}, predicted={predicted}, probability = {probability:.4f}, true={true_label}, accuracy={accuracy:.2f}")
     accuracy = np.mean([1 if pred[1] == true_label else 0 for pred in predictions])
     print(f"classification accuracy={accuracy:.4f}")
 
